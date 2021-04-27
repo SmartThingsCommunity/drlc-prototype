@@ -1,0 +1,11 @@
+{
+    "clientName": "DRLC Prototype",
+    "scope": [
+        "i:deviceprofiles:*",
+        "r:devices:*",
+        "r:locations:*",
+        "x:devices:*",
+        "x:notifications:*"
+    ],
+    "redirectUris": []
+}
