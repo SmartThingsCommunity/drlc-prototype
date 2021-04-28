@@ -16,6 +16,7 @@ module.exports = async (context) => {
     if (ENERSPONSE_SERVER_URL) {
         await axios.post(`${ENERSPONSE_SERVER_URL}/register`, {
             installedAppId: context.installedAppId,
+            zipCode: context.configStringValue('zipCode'),
             utility: context.configStringValue('utility')
         });
     }
