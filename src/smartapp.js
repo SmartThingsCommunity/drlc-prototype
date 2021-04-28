@@ -23,7 +23,7 @@ const DYNAMODB_ENDPOINT = process.env.DYNAMODB_ENDPOINT;
  * The service providing persistent storage of access and refresh tokens as well as the app configuration options.
  * Persistent storage of tokens is required whenever the app needs to call the SmartThings APIs other than in response
  * to lifecycle events. Such calls are necessary in this case so that demand response events can be scheduled in
- * when calls are received by Enersponse.
+ * when calls are received by energy service.
  *
  * @type {DynamoDBContextStore}
  */

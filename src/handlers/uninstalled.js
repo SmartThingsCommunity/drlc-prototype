@@ -1,7 +1,7 @@
 const axios = require('axios');
 const db = require('../db')
 
-const ENERSPONSE_SERVER_URL = process.env.ENERSPONSE_SERVER_URL;
+const ENERGY_SERVICE_URL = process.env.ENERGY_SERVICE_URL;
 
 /**
  * UNINSTALLED lifecycle event handler. Called when the app is removed by the user
@@ -10,9 +10,9 @@ const ENERSPONSE_SERVER_URL = process.env.ENERSPONSE_SERVER_URL;
  */
 module.exports = async (context) => {
 
-    // Call Enersponse to let them know that the instance has been uninstalled
-    if (ENERSPONSE_SERVER_URL) {
-        await axios.post(`${ENERSPONSE_SERVER_URL}/unregister`, {
+    // Call the energy service to let them know that the instance has been uninstalled
+    if (ENERGY_SERVICE_URL) {
+        await axios.post(`${ENERGY_SERVICE_URL}/unregister`, {
             installedAppId: context.installedAppId
         });
     }

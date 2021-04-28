@@ -1,5 +1,5 @@
 {
-  "name": "enersponse-drlc",
+  "name": "drlc-prototype",
   "version": "1.0.0",
   "description": "Prototype app supporting demand response / load control",
   "main": "server.js",

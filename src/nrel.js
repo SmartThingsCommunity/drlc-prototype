@@ -4,7 +4,7 @@ const apiKey = process.env.NREL_API_KEY;
 
 /**
  * API to get list of utilities for a zip code. Uses the US National Renewable Energy Laboratory API as a
- * placeholder. To be replaced with a call to Enersponse
+ * placeholder. To be replaced with a call to the energy service
  */
 module.exports = {
     getUtilities(zipCode) {
