@@ -8,7 +8,8 @@ const {SmartAppContext, Page} = require('@smartthings/smartapp');
  */
 module.exports = (context, page) => {
     page.section('heading', section => {
-        section.textSetting('zipCode');
+        section.textSetting('zipCode')
+            .required(true);
     });
     page.nextPageId('utility');
     page.previousPageId('intro2');

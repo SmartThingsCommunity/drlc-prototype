@@ -41,4 +41,7 @@ module.exports = async (context, page) => {
         section.numberSetting('eventSetback')
             .defaultValue(3);
     });
+
+    page.previousPageId('location');
+    page.complete(true);
 };
