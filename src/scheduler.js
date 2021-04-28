@@ -25,6 +25,10 @@ module.exports = {
         // Constructs the context object, including the app configuration and APIs, from the persistent context store
         const context = await smartApp.withContext(installedAppId);
 
+        if (!context.installedAppId) {
+            throw {status: 404, message: `Installed app '${installedAppId}' not found`}
+        }
+
         // Get the ID of the demand response control/indicator device
         const deviceId = await devices.getDeviceId(context);
 
@@ -89,19 +93,19 @@ module.exports = {
         ops.push(context.api.devices.createEvents(deviceId, [
             {
                 component: 'main',
-                capability: 'detailmedia27985.demandResponseStatus',
+                capability: 'stsolutions.demandResponseStatus',
                 attribute: 'currentStatus',
                 value: 'inactive'
             },
             {
                 component: 'main',
-                capability: 'detailmedia27985.message',
+                capability: 'stsolutions.message',
                 attribute: 'text',
                 value: location.__mf('messages.drlcDeviceMessage', {startTime, duration})
             },
             {
                 component: 'main',
-                capability: 'detailmedia27985.demandResponseMode',
+                capability: 'stsolutions.demandResponseMode',
                 attribute: 'mode',
                 value: 'enabled'
             }

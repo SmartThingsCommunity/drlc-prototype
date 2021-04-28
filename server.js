@@ -41,7 +41,7 @@ server.post('/event', async (req, res, next) => {
         res.send({status: 'OK'});
     } catch (e) {
         console.log('Error processing event', e);
-        res.status(500);
+        res.status(e.status || 500);
         res.send({message: e.message});
     }
 });

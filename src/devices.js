@@ -34,7 +34,7 @@ module.exports = {
             deviceId = await this.getDeviceId(context);
         }
         const status = await context.api.devices.getCapabilityStatus(
-            deviceId, 'main', 'detailmedia27985.demandResponseMode');
+            deviceId, 'main', 'stsolutions.demandResponseMode');
 
         return status.mode.value;
     },
@@ -51,7 +51,7 @@ module.exports = {
             deviceId = await this.getDeviceId(context);
         }
         const status = await context.api.devices.getCapabilityStatus(
-            deviceId, 'main', 'detailmedia27985.demandResponseStatus');
+            deviceId, 'main', 'stsolutions.demandResponseStatus');
 
         return status.currentStatus;
     },
@@ -73,19 +73,19 @@ module.exports = {
         await context.api.devices.createEvents(device.deviceId, [
             {
                 component: 'main',
-                capability: 'detailmedia27985.demandResponseMode',
+                capability: 'stsolutions.demandResponseMode',
                 attribute: 'mode',
                 value: 'enabled'
             },
             {
                 component: 'main',
-                capability: 'detailmedia27985.demandResponseStatus',
+                capability: 'stsolutions.demandResponseStatus',
                 attribute: 'currentStatus',
                 value: 'inactive'
             },
             {
                 component: 'main',
-                capability: 'detailmedia27985.message',
+                capability: 'stsolutions.message',
                 attribute: 'text',
                 value: ''
             }
@@ -104,7 +104,7 @@ module.exports = {
         const events = [
             {
                 component: 'main',
-                capability: 'detailmedia27985.demandResponseMode',
+                capability: 'stsolutions.demandResponseMode',
                 attribute: 'mode',
                 value
             }
@@ -125,7 +125,7 @@ module.exports = {
         const events = [
             {
                 component: 'main',
-                capability: 'detailmedia27985.demandResponseStatus',
+                capability: 'stsolutions.demandResponseStatus',
                 attribute: 'currentStatus',
                 value
             }
@@ -134,7 +134,7 @@ module.exports = {
             events.push(
                 {
                     component: 'main',
-                    capability: 'detailmedia27985.message',
+                    capability: 'stsolutions.message',
                     attribute: 'text',
                     value: ''
                 }

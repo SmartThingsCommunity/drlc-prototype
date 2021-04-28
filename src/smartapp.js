@@ -62,5 +62,5 @@ module.exports = new SmartApp()
     .scheduledEventHandler('preStartHandler', preStartHandler)
     .scheduledEventHandler('stopHandler', stopHandler)
     .scheduledEventHandler('preHandler', preHandler)
-    .deviceCommand('detailmedia27985.demandResponseMode/setMode', modeCommand);
+    .deviceCommand('stsolutions.demandResponseMode/setMode', modeCommand);
 
