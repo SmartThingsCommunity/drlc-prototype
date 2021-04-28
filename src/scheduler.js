@@ -28,12 +28,15 @@ module.exports = {
         // Get the ID of the demand response control/indicator device
         const deviceId = await devices.getDeviceId(context);
 
+        // Operations than can be executed concurrently
+        let ops = [];
+
         // Adjust thermostat setpoints if an event is already in progress, since we can only handle one
         // event at a time. We're effectively overwriting events with this approach. The alternative would
         // be to reject requests if an event is already in progress.
         const {value} = await devices.demandResponseStatus(context, deviceId);
         if (value !== 'inactive') {
-            await devices.adjustThermostatSetpoints(context)
+            ops.push(devices.adjustThermostatSetpoints(context));
         }
 
         // Delete any existing schedules
@@ -42,37 +45,37 @@ module.exports = {
         // Schedule the pre-event start, if earlier than the event
         if (pre.getTime() < start.getTime()) {
             // Schedule the pre event start
-            await context.api.schedules.create({
+            ops.push(context.api.schedules.create({
                 name: 'preHandler',
                 once: {
                     time: pre.getTime()
                 }
-            });
+            }));
 
             // Schedule the event start
-            await context.api.schedules.create({
+            ops.push(context.api.schedules.create({
                 name: 'preStartHandler',
                 once: {
                     time: start.getTime()
                 }
-            });
+            }));
         } else {
             // Schedule the event start
-            await context.api.schedules.create({
+            ops.push(context.api.schedules.create({
                 name: 'startHandler',
                 once: {
                     time: start.getTime()
                 }
-            });
+            }));
         }
 
         // Schedule the event end
-        await context.api.schedules.create({
+        ops.push(context.api.schedules.create({
             name: 'stopHandler',
             once: {
                 time: end.getTime()
             }
-        });
+        }));
 
         // Get the location and format a local time string from the locale and time zome
         const location = await context.api.locations.get(context.locationId);
@@ -83,7 +86,7 @@ module.exports = {
         const message = location.__mf('messages.drlcEventBody', {startTime, duration});
 
         // Update the control/indicator device
-        await context.api.devices.createEvents(deviceId, [
+        ops.push(context.api.devices.createEvents(deviceId, [
             {
                 component: 'main',
                 capability: 'detailmedia27985.demandResponseStatus',
@@ -102,12 +105,12 @@ module.exports = {
                 attribute: 'mode',
                 value: 'enabled'
             }
-        ]);
+        ]));
 
         // Send push notifications to users. Note that all notifications will translated according to the
         // location's locale setting. Support for separate locations for different users in the same location
         // is not yet available.
-        await context.api.notifications.create({
+        ops.push(context.api.notifications.create({
             type: 'ALERT',
             title: location.__('messages.drlcEventTitle'),
             code: message,
@@ -115,6 +118,8 @@ module.exports = {
                 type: 'device',
                 id: deviceId
             },
-        });
+        }));
+
+        await Promise.allSettled(ops);
     }
 };

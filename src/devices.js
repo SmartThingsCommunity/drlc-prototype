@@ -159,7 +159,7 @@ module.exports = {
                 arguments: [it.value + delta]
             })
         })
-        return Promise.all(ops)
+        return Promise.allSettled(ops)
     },
 
     /**
@@ -181,7 +181,10 @@ module.exports = {
             }
         })
 
-        const data = await Promise.all(ops)
+        const data = (await Promise.allSettled(ops))
+            .filter(it => it.status === 'fulfilled')
+            .map(it => it.value)
+
         await db.putState(context.installedAppId, data)
         return data
     },
@@ -202,6 +205,6 @@ module.exports = {
                 arguments: [it.value + delta]
             })
         })
-        return Promise.all(ops)
+        return Promise.allSettled(ops)
     }
 };
