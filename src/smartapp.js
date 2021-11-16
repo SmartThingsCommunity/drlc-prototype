@@ -12,6 +12,7 @@ const preStartHandler = require('./handlers/pre-start-handler');
 const stopHandler = require('./handlers/stop-handler');
 const uninstalled = require('./handlers/uninstalled');
 const modeCommand = require('./handlers/mode-command');
+const oauthHandler = require('./handlers/oauth-handler');
 
 const APP_ID = process.env.APP_ID;
 const CLIENT_ID = process.env.APP_ID;
@@ -58,6 +59,7 @@ module.exports = new SmartApp()
     .initialized(initialized)
     .updated(updated)
     .uninstalled(uninstalled)
+    .oauthHandler(oauthHandler)
     .scheduledEventHandler('startHandler', startHandler)
     .scheduledEventHandler('preStartHandler', preStartHandler)
     .scheduledEventHandler('stopHandler', stopHandler)

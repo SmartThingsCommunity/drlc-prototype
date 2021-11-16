@@ -7,7 +7,7 @@ AWS.config.update({ region: AWS_REGION, endpoint: DYNAMODB_ENDPOINT });
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 module.exports = {
-    pk(installedAppId) {
+    statePk(installedAppId) {
         return `state:${installedAppId}`
     },
 
@@ -19,7 +19,7 @@ module.exports = {
         const params = {
             TableName: DYNAMODB_TABLE,
             Item: {
-                id: this.pk(installedAppId),
+                id: this.statePk(installedAppId),
                 thermostats: thermostats.reduce((map, it) => {
                     map[this.deviceStateKey(it.deviceId, it.component)] = it.value
                     return map
@@ -33,7 +33,7 @@ module.exports = {
         const params = {
             TableName: DYNAMODB_TABLE,
             Key: {
-                id: this.pk(installedAppId),
+                id: this.statePk(installedAppId),
             },
             ProjectionExpression: 'thermostats'
         }
@@ -53,9 +53,52 @@ module.exports = {
         const params = {
             TableName: DYNAMODB_TABLE,
             Key: {
-                id: this.pk(installedAppId),
+                id: this.statePk(installedAppId),
             }
         }
         return docClient.delete(params).promise()
+    },
+
+    credentialsPk(installedAppId) {
+        return `credentials:${installedAppId}`
+    },
+
+    putCredentials(installedAppId, credentials) {
+        const params = {
+            TableName: DYNAMODB_TABLE,
+            Item: {
+                id: this.credentialsPk(installedAppId),
+                credentials
+            }
+        };
+        return docClient.put(params).promise()
+    },
+
+    getCredentials(installedAppId) {
+        const params = {
+            TableName: DYNAMODB_TABLE,
+            Key: {
+                id: this.credentialsPk(installedAppId),
+            },
+            ProjectionExpression: 'credentials'
+        }
+        return docClient.get(params).promise().then(data => data.Item ? data.Item.credentials : undefined)
+    },
+
+    clearCredentials(installedAppId) {
+        const params = {
+            TableName: DYNAMODB_TABLE,
+            Key: {
+                id: this.credentialsPk(installedAppId),
+            }
+        }
+        return docClient.delete(params).promise()
+    },
+
+    clearAll(installedAppId) {
+        return Promise.allSettled([
+            this.clearState(installedAppId),
+            this.clearCredentials(installedAppId)
+        ])
     }
 }

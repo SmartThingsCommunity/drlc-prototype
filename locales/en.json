@@ -28,5 +28,14 @@
 	"pages.utility.settings.eventSetback.name": "Event temperature increase (degrees)",
 	"messages.drlcEventTitle": "Demand Response Event",
 	"messages.drlcEventBody": "A demand response event is scheduled to start at {startTime} today and last for {duration} minutes.",
-	"messages.drlcDeviceMessage": "{duration} minute event scheduled for {startTime}"
+	"messages.drlcDeviceMessage": "{duration} minute event scheduled for {startTime}",
+	"pages.utility.sections.connect.name": "Utility Data",
+	"pages.utility.settings.utilityInstructions.name": "",
+	"pages.utility.settings.utilityInstructions.description": "Connect your electric utility account to SmartThings to save even more.",
+	"pages.utility.settings.link.name": "Connect to your utility",
+	"pages.utility.settings.link.description": "",
+	"pages.utility.settings.disconnectInstructions.name": "",
+	"pages.utility.settings.disconnectInstructions.description": "You've already connected your utility with SmartThings to save on energy costs.",
+	"pages.utility.settings.disconnectLink.name": "Disconnect from your utility",
+	"pages.utility.settings.disconnectLink.description": "You will no longer see energy use and cost data in SmartThings"
 }

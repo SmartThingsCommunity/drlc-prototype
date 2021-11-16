@@ -1,0 +1,17 @@
+name: Energy Service
+components:
+  - id: main
+    capabilities:
+      - id: stsolutions.demandResponseMode
+        version: 1
+      - id: stsolutions.demandResponseStatus
+        version: 1
+      - id: stsolutions.message
+        version: 1
+    categories: []
+metadata:
+  deviceType: Power Meter
+  vid: 7c75153c-5c2e-32b9-9609-e4ae6e646cea
+  ocfDeviceType: x.com.st.d.energymeter
+  mnmn: SmartThingsCommunity
+preferences: []

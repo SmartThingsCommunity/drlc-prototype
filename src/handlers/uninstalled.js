@@ -18,5 +18,5 @@ module.exports = async (context) => {
     }
 
     // Clear the state record, if any, for this installation
-    await db.clearState(context.installedAppId);
+    await db.clearAll(context.installedAppId);
 };

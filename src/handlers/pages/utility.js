@@ -1,5 +1,10 @@
 const {SmartAppContext, Page} = require('@smartthings/smartapp');
 const nrel = require('../../nrel');
+const db = require('../../db')
+
+const SMARTTHINGS_REDIRECT_URI = 'https://api.smartthings.com/oauth/callback'
+const ENERGY_SERVICE_URL = process.env.ENERGY_SERVICE_URL
+const ENERGY_SERVICE_CLIENT_ID = process.env.ENERGY_SERVICE_CLIENT_ID
 
 /**
  * Page for user to select their utility (if there's more than one) and configure thermostats for
@@ -23,6 +28,21 @@ module.exports = async (context, page) => {
             .options(utilities)
             .required(true)
             .defaultValue(utilities && utilities.length === 1 ? utilities[0] : undefined);
+    });
+
+    // Connect to the utility
+    const credentials = await db.getCredentials(context.installedAppId)
+    page.section('connect', section => {
+        if (credentials) {
+            section.paragraphSetting('disconnectInstructions');
+            const url = `${ENERGY_SERVICE_URL}/disconnect?installedAppId=${context.installedAppId}`
+            section.oauthSetting('disconnectLink').urlTemplate(url)
+
+        } else {
+            section.paragraphSetting('utilityInstructions');
+            const url = `${ENERGY_SERVICE_URL}?installedAppId=${context.installedAppId}&utility=${encodeURIComponent(context.configStringValue('utility'))}`
+            section.oauthSetting('link').urlTemplate(url)
+        }
     });
 
     // Render settings for selection of thermostats and the configuration of demand response pre-cool

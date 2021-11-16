@@ -9,11 +9,13 @@
   "author": "SmartThings",
   "license": "Apache-2.0",
   "dependencies": {
-    "@smartthings/dynamodb-context-store": "^2.1.0",
-    "@smartthings/smartapp": "^2.5.3",
+    "@smartthings/dynamodb-context-store": "^2.1.1",
+    "@smartthings/smartapp": "^2.6.0",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-session": "^1.17.1"
+    "express-session": "^1.17.1",
+    "querystring": "^0.2.1",
+    "zip-to-timezone": "^1.1.5"
   }
 }

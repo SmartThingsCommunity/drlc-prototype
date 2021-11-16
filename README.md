@@ -8,6 +8,7 @@ It also creates a device that can be used in the SmartThings rule builder
 to take additional actions during events and to opt out of participation in
 an event at the user's discretion.
 
+
 ## Prerequisites
 
 To run your own version of this prototype you need:
