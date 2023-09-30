@@ -34,7 +34,9 @@ const contextStore = new DynamoDBContextStore({
     },
     AWSConfigJSON: {
         region: 'us-east-1',
-        endpoint: DYNAMODB_ENDPOINT
+        endpoint: DYNAMODB_ENDPOINT,
+        accessKeyId: 'xxxyyyzzz',
+        secretAccessKey: 'aaabbbccc'
     },
     autoCreate: true
 });

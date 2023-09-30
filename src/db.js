@@ -3,7 +3,7 @@ const AWS_REGION = process.env.AWS_REGION || 'us-east-1'
 const DYNAMODB_TABLE = process.env.DYNAMODB_TABLE
 const DYNAMODB_ENDPOINT = process.env.DYNAMODB_ENDPOINT
 
-AWS.config.update({ region: AWS_REGION, endpoint: DYNAMODB_ENDPOINT });
+AWS.config.update({ region: AWS_REGION, endpoint: DYNAMODB_ENDPOINT, accessKeyId: 'xxxyyyzzz', secretAccessKey: 'aaabbbccc' });
 const docClient = new AWS.DynamoDB.DocumentClient()
 
 module.exports = {
